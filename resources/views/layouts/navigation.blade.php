@@ -16,6 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('rent.index')" :active="request()->routeIs('rent.index')">
+                        {{ __('Rent') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -37,7 +42,11 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
+                        @role('user')
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('My Order') }}
+                        </x-dropdown-link>
+                        @endrole
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
