@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/rent', [UserController::class, 'index'])->name('rent.index');
     Route::get('/order', [UserController::class, 'order'])->name('order.index');
+    Route::post('/order', [UserController::class, 'store'])->name('order.store');
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('/car', CarController::class);

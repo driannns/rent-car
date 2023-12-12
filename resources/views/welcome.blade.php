@@ -15,21 +15,21 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased">
+<body class="antialiased bg-gray-100">
     <div class="relative flex">
         @if (Route::has('login'))
         <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
             @auth
             <a href="{{ url('/dashboard') }}"
-                class="font-semibold hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm">Dashboard</a>
+                class="font-semibold text-[#fca311] hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm">Dashboard</a>
             @else
             <a href="{{ route('login') }}"
-                class="font-semibold hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm">Log
+                class="font-semibold text-[#fca311] hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm">Log
                 in</a>
 
             @if (Route::has('register'))
             <a href="{{ route('register') }}"
-                class="ml-4 font-semibold hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm">Register</a>
+                class="ml-4 font-semibold text-[#fca311] hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm">Register</a>
             @endif
             @endauth
         </div>
@@ -37,7 +37,7 @@
         <div class="w-1/2 grid place-items-center h-screen p-5">
             <img src="{{ asset('assets/welcome.png') }}" alt="Rent Car">
         </div>
-        <div class="w-1/2 font-medium text-center grid place-items-center p-5">
+        <div class="w-1/2 font-medium text-center grid place-items-center p-5 text-black">
             Selamat datang di RentCar, destinasi pilihan untuk menyewa mobil terbaik dan memulai petualangan tanpa batas
             Anda! Dengan layanan kami yang unggul, kendaraan berkualitas tinggi, dan harga yang kompetitif, RentCar
             menghadirkan pengalaman menyewa mobil yang tak terlupakan. Temukan kenyamanan dan kebebasan menjelajahi kota
