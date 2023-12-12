@@ -6,6 +6,7 @@
             <!-- <img src="{{ asset('assets/dashboard.jpg') }}" alt="" class="rounded-lg"> -->
         </div>
         <div class="w-1/2 text-center p-10 grid place-items-center">
+            <img class="rounded-full object-cover" width="180" height="180" src="assets/logo.jpg" alt="Logo">
             <p class="font-semibold text-[#e5e5e5]">
                 Di rentcar yang modern dan terpercaya ini, Anda dapat menemukan berbagai pilihan mobil yang siap
                 menyempurnakan perjalanan Anda. Salah satu opsi yang menarik adalah mobil GR Supra, sebuah kendaraan
@@ -19,23 +20,25 @@
     <section id="order" class="h-screen p-10">
         <h1 class="text-2xl font-bold text-center text-[#e5e5e5]">RENT CAR</h1>
         <div class="grid grid-cols-4 gap-x-5 p-10">
-            @for($i = 0; $i < 4; $i++) 
+            @if (is_countable($data) && count($data) > 0)
+            @foreach ($data as $data)
             <div class="card bg-base-100 shadow-xl">
-                <figure><img src="{{ asset('car/yaris.png') }}" alt="Shoes" />
+                <figure><img src="{{ asset('storage/'.$data->picture) }}" alt="Shoes" />
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title">
-                        Yaris RS
+                        {{$data->name}}
                         <div class="badge badge-secondary">NEW</div>
                     </h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                     <div class="card-actions justify-end items-center">
-                        <div class="">Rp. 380.000 / 12 jam</div>
+                        <div class="">Rp. {{ number_format($data->harga, 0, ',', '.') }} / 12 jam</div>
                         <a href="#" class="btn bg-[#fca311] text-white">Rent!</a>
                     </div>
                 </div>
             </div>
-            @endfor
+            @endforeach
+            @endif
         </div>
         <div class="flex justify-center">
             <a href="{{ route('rent.index') }}" class="btn bg-[#fca311] text-white">See all car</a>

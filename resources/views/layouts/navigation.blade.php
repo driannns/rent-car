@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <div class="flex items-center">
-                <!-- Logo -->
+                <img class="object-cover" width="60" height="60" src="assets/logo-rentcar.png" alt="Logo">
                 <div class="shrink-0 flex items-center font-bold text-[#14213D]">
                     <a href="{{ route('dashboard') }}">
                         RentCar
@@ -21,7 +21,12 @@
                         {{ __('Rent') }}
                     </x-nav-link>
                 </div>
+                
+
             </div>
+            
+            
+    
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

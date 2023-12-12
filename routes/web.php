@@ -5,6 +5,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $data = DB::table('cars')->orderBy('id', 'desc')->take(4)->get();
+    return view('dashboard', ['data' =>$data]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/add_category', [CategoryController::class, 'create'])->name('car.create_category');
