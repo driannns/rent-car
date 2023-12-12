@@ -11,8 +11,15 @@ class UserController extends Controller
 {
     public function index(){
         $data = DB::table('cars')->orderBy('name', 'asc')->get();
+        $data2 = DB::table('cars')
+            ->join('categories', 'cars.id_category', '=', 'categories.id')
+            ->orderBy('cars.name', 'asc')
+            ->select('cars.*', 'categories.category as category_name')
+            ->paginate(5);
+    
+        
         $category = DB::table('categories')->orderBy('category', 'asc')->get();
-        return view ('rent.index', ['data' => $data, 'category' => $category]);
+        return view ('rent.index', ['data' => $data,'data2' => $data2, 'category' => $category]);
     }
 
     public function orderStore(){

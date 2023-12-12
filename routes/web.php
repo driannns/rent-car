@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 Route::get('/add_category', [CategoryController::class, 'create'])->name('car.create_category');
 Route::post('/add_category', [CategoryController::class, 'store'])->name('car.create_category');
 Route::post('/add_car', [CarController::class, 'store'])->name('car.create');
+Route::post('/search', [CarController::class, 'search'])->name('car.search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/rent', [UserController::class, 'index'])->name('rent.index');
     Route::get('/order', [UserController::class, 'order'])->name('order.index');
     Route::post('/order', [UserController::class, 'store'])->name('order.store');
+
+    Route::get('/category_list', [CategoryController::class, 'index'])->name('category');
+
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('/car', CarController::class);

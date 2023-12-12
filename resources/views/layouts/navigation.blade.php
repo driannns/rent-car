@@ -16,12 +16,57 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @if (Auth::user())
+                @if (Auth::check() && Auth::user()->id_admin == 0)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('rent.index')" :active="request()->routeIs('rent.index')">
                         {{ __('Rent') }}
                     </x-nav-link>
                 </div>
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link>
+                        {{ __('History') }}
+                    </x-nav-link>
+                </div>
+
+                @else
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('rent.index')" :active="request()->routeIs('rent.index')">
+                        {{ __('Car List') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('category')" :active="request()->routeIs('category')">
+                        {{ __('Category List') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link>
+                        {{ __('User List') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link>
+                        {{ __('Order List') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link>
+                        {{ __('History') }}
+                    </x-nav-link>
+                </div>
+                @endif
+                @endif
+                
+
             </div>
+            
+            
+            
+    
+>>>>>>> sal
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

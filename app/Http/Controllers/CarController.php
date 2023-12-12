@@ -16,6 +16,14 @@ class CarController extends Controller
         //
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $data = Car::where('name', 'like', '%' . $searchTerm . '%')->get();
+        $category = DB::table('categories')->orderBy('category', 'asc')->get();
+        return view('rent.index', ['data' =>$data, 'category' => $category]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
