@@ -1,7 +1,11 @@
 <x-app-layout>
 <section id="order" class="h-screen p-10">
     <h1 class="text-2xl font-bold text-center text-[#e5e5e5]">RENT CAR</h1>
-    <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4">Add Car</a>
+    <div class="grid grid-cols-8 gap-x-5 p-10">
+        <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4">Add Car</a>
+        <a href="" class="btn bg-[#fca311] text-white mt-4">Add Category</a>
+    </div>
+    
     <div class="grid grid-cols-4 gap-x-5 p-10">
         @for($i = 0; $i < 4; $i++) 
         <div class="card bg-base-100 shadow-xl">
