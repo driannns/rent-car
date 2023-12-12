@@ -4,8 +4,8 @@
         <h1 class="text-2xl font-bold text-center">RENT CAR</h1>
         @role('admin')
         <div class="grid grid-cols-8 gap-x-5 p-10">
-            <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4">Add Car</a>
-            <a href="{{ route('car.create_category') }}" class="btn bg-[#fca311] text-white mt-4">Add Category</a>
+            <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white border-0">Add Car</a>
+            <a href="{{ route('car.create_category') }}" class="btn bg-[#fca311] text-white border-0">Add Category</a>
         </div>
         @endrole
         <div class="flex gap-x-3 p-10">
@@ -29,12 +29,12 @@
                         <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                         <div class="card-actions justify-end items-center">
                             <div class="">Rp. {{ number_format($data->harga, 0, ',', '.') }} / 12 jam</div>
-                            <label for="my_modal_7" class="btn bg-[#fca311] text-white border-0">Rent!</label>
+                            <label for="my_modal_{{ $data->id }}" class="btn bg-[#fca311] text-white border-0">Rent!</label>
                         </div>
                     </div>
                 </div>
 
-                <input type="checkbox" id="my_modal_7" class="modal-toggle" />
+                <input type="checkbox" id="my_modal_{{ $data->id }}" class="modal-toggle" />
                 <div class="modal" role="dialog">
                     <div class="modal-box bg-white w-11/12 max-w-5xl">
                         <h3 class="text-lg font-bold text-center">Rent {{ $data->name }}</h3>
@@ -56,24 +56,25 @@
                                     <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                                 </div>
                             </div>
-                            <form action="" class="w-1/2 flex flex-col gap-y-2" method="post">
+                            <form action="{{ route('order.store') }}" class="w-1/2 flex flex-col gap-y-2" method="post">
                                 @csrf
+                                <input type="hidden" name="id_car" value="{{ $data->id }}">
                                 <input type="text" name="name" value="{{ auth()->user()->name }}"
-                                    placeholder="Type here" class="input input-bordered w-full bg-white" readonly />
+                                    placeholder="Type here" class="input input-bordered w-full bg-white" readonly required/>
                                 <div class="grid grid-cols-2 gap-x-2">
                                     <div class="flex items-center gap-x-1">
                                         <input type="number" name="day" placeholder="Type here"
-                                            class="input input-bordered w-full bg-white" />
+                                            class="input input-bordered w-full bg-white" value="0"/>
                                         <label for="day">Day</label>
                                     </div>
                                     <div class="flex items-center gap-x-1">
                                         <input type="number" name="hour" placeholder="Type here"
-                                            class="input input-bordered w-full bg-white" max="23" min="0" />
+                                            class="input input-bordered w-full bg-white" max="23" value="1" min="1" required/>
                                         <label for="day">Hour</label>
                                     </div>
                                 </div>
-                                <label for="pembayaran">Metode Pembayaran</label>
-                                <select name="pembayaran" class="select select-bordered w-full bg-white">
+                                <label for="payment">Metode Pembayaran</label>
+                                <select name="payment" class="select select-bordered w-full bg-white" required>
                                     <option value="">Pilih Metode Pembayaran</option>
                                     <option value="Dana">Dana</option>
                                     <option value="Gopay">Gopay</option>
@@ -81,11 +82,11 @@
                                     <option value="Virtual BCA">Virtual BCA</option>
                                     <option value="Transfer Bank">Transfer Bank</option>
                                 </select>
-                                <button type="submit" class="btn w-full">Rent!</button>
+                                <button type="submit" class="btn bg-[#fca311] transition-colors hover:bg-[#c7974a] w-full border-0 text-white">Rent!</button>
                             </form>
                         </div>
                     </div>
-                    <label class="modal-backdrop" for="my_modal_7">Close</label>
+                    <label class="modal-backdrop" for="my_modal_{{ $data->id }}">Close</label>
                 </div>
                 @endforeach
                 @endif

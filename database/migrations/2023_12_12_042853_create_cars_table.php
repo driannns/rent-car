@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('bbm');
             $table->bigInteger('harga');
             $table->string('picture');
+            $table->enum('status', ['Available', 'Unavailable'])->default('Available');
             $table->timestamps();
         });
     }
