@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('deskripsi');
             $table->bigInteger('id_category')->unsigned()->index()->nullable();
-            $table->foreign('id_category')->references('id')->on('category')->onDelete('cascade');
+            $table->foreign('id_category')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('bbm');
             $table->bigInteger('harga');
             $table->string('picture');
             $table->timestamps();

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
@@ -19,7 +21,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view ('car.create');
+        $data = DB::table('categories')->orderBy('category', 'asc')->get();
+        return view ('car.create', ['data' => $data]);
     }
 
     /**
@@ -27,7 +30,35 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required',
+                'deskripsi' => 'required',
+                'id_category' => 'required',
+                'bbm' => 'required',
+                'harga' => 'required',
+                'picture' => 'mimes:jpeg,png,jpg',
+                
+            ]);
+
+            $file = $request->file('picture');
+            $filename = uniqid() . "_" . $file->getClientOriginalName();
+            $file->storeAs('public/', $filename);
+    
+            Car::create([
+                'name' => $request->name,
+                'deskripsi' => $request->deskripsi,
+                'id_category' => $request->id_category,
+                'bbm' => $request->bbm,
+                'harga' => $request->harga,
+                'picture' => $filename
+                
+            ]);
+    
+            return redirect(route('rent.index'))->with('success', 'Mobil Ditambahkan');
+        } catch (\Throwable $th) {
+            return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
+        }
     }
 
     /**
