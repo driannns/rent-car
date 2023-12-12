@@ -28,7 +28,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <img class="w-5 h-5 rounded-full" src="{{ asset('storage/'.Auth::user()->picture)}}" alt="Rounded avatar">
+                            <img class=" rounded-full object-cover" width="20" height="20" src="{{ asset('storage/'.Auth::user()->picture) }}" onerror="this.onerror=null; this.src='{{ asset('assets/profile.webp') }}';">
                             
                             <span class="mx-2">{{ Auth::user()->name }}</span>
 

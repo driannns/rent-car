@@ -18,7 +18,7 @@
         @method('patch')
 
         <div>
-            <img class="w-20 h-20 rounded-full object-cover" src="{{ asset('storage/'.$user->picture)}}" alt="Rounded avatar">
+            <img class=" rounded-full object-cover" width="100" height="100" src="{{ asset('storage/'.Auth::user()->picture) }}" onerror="this.onerror=null; this.src='{{ asset('assets/profile.webp') }}';">
 
         </div>
 
