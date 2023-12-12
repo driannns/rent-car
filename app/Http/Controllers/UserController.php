@@ -9,7 +9,8 @@ class UserController extends Controller
 {
     public function index(){
         $data = DB::table('cars')->orderBy('name', 'asc')->get();
-        return view ('rent.index', ['data' => $data]);
+        $category = DB::table('categories')->orderBy('category', 'asc')->get();
+        return view ('rent.index', ['data' => $data, 'category' => $category]);
     }
 
     public function order(){
