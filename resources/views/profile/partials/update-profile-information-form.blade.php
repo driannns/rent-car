@@ -18,6 +18,11 @@
         @method('patch')
 
         <div>
+            <img class="w-20 h-20 rounded-full object-cover" src="{{ asset('storage/'.$user->picture)}}" alt="Rounded avatar">
+
+        </div>
+
+        <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
