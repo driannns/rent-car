@@ -16,8 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                @if (Auth::user())
-                @if (Auth::check() && Auth::user()->id_admin == 0)
+                @role ('user')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('rent.index')" :active="request()->routeIs('rent.index')">
                         {{ __('Rent') }}
@@ -30,7 +29,9 @@
                     </x-nav-link>
                 </div>
 
-                @else
+                @endrole
+
+                @role ('admin')
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('rent.index')" :active="request()->routeIs('rent.index')">
@@ -48,7 +49,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link>
+                    <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
                         {{ __('Order List') }}
                     </x-nav-link>
                 </div>
@@ -57,8 +58,7 @@
                         {{ __('History') }}
                     </x-nav-link>
                 </div>
-                @endif
-                @endif
+                @endrole
                 
 
             </div>

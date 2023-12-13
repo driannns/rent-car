@@ -28,7 +28,8 @@ class UserController extends Controller
 
     public function order(){
         $orders = DB::table('orders')->where('id_user', auth()->user()->id)->get();
-        return view ('order.index', ['orders' => $orders]);
+        $data = DB::table('orders')->orderBy('id', 'desc')->paginate(5);
+        return view ('order.index', ['orders' => $orders, 'data' => $data]);
     }
 
     public function store(Request $request){

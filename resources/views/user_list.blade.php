@@ -1,8 +1,9 @@
 <x-app-layout>
+    @include ('alert')
     <section class=" p-10">
         <h1 class="text-2xl font-bold text-center ">LIST USER</h1>
         <div class=" p-10">
-            <a href="{{ route('add_user') }}" class="btn bg-[#fca311] text-white mt-4">Add New User</a>
+            <a href="{{ route('add_user') }}" class="btn bg-[#fca311] text-white mt-4 border-none">Add New User</a>
         </div>
         
         

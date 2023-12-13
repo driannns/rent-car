@@ -41,7 +41,7 @@ class CategoryController extends Controller
                 
             ]);
     
-            return redirect('/rent')->with('success', 'Category Ditambahkan');
+            return view('category')->with('success', 'Category Ditambahkan');
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
         }

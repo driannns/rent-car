@@ -2,7 +2,7 @@
     <section class=" p-10">
         <h1 class="text-2xl font-bold text-center ">LIST KATEGORI</h1>
         <div class=" p-10">
-            <a href="{{ route('car.create_category') }}" class="btn bg-[#fca311] text-white mt-4">Add New Category</a>
+            <a href="{{ route('car.create_category') }}" class="btn bg-[#fca311] text-white mt-4 border-none">Add New Category</a>
         </div>
         
         
