@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -82,7 +83,9 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $car = Car::find($id);
+        $category = Category::all();
+        return view('rent.edit', ['car' => $car, 'category' => $category]);
     }
 
     /**
@@ -90,7 +93,37 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'deskripsi' => 'required',
+            'id_category' => 'required',
+            'bbm' => 'required',
+            'harga' => 'required',
+            'picture' => 'mimes:jpeg,png,jpg',
+            
+        ]);
+
+        $car = Car::find($id);
+
+        if($request->picture){
+            $file = $request->file('picture');
+            $filename = uniqid() . "_" . $file->getClientOriginalName();
+            $file->storeAs('public/', $filename);
+            
+            $car->update([
+                'picture' => $filename
+            ]);
+        }
+
+        $car->update([
+            'name' => $request->name,
+            'deskripsi' => $request->deskripsi,
+            'id_category' => $request->id_category,
+            'bbm' => $request->bbm,
+            'harga' => $request->harga,
+        ]);
+
+        return redirect(route('rent.index'))->with('success', 'Mobil telah diedit');
     }
 
     /**
@@ -98,6 +131,10 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $car = Car::find($id);
+
+        $car->delete();
+
+        return redirect(route('rent.index'))->with('success', 'Mobil telah dihapus');
     }
 }

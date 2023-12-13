@@ -23,12 +23,22 @@
                         </h2>
                         <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                         <div class="card-actions justify-end items-center">
+                            @role('user')
                             <div class="">Rp. {{ number_format($data->harga, 0, ',', '.') }} / 12 jam</div>
-                            <label for="my_modal_{{ $data->id }}" class="btn bg-[#fca311] text-white border-0">Rent!</label>
+                            @endrole
+                            @role('admin')
+                            <a href="{{ route('car.edit', $data->id) }}"
+                                class="btn bg-[#fca311] text-white border-0">Edit!</a>
+                            <label for="my_modalDelete{{ $data->id }}"
+                                class="btn btn-error text-white border-0">Delete!</label>
+                            @elserole('user')
+                            <label for="my_modal_{{ $data->id }}"
+                                class="btn bg-[#fca311] text-white border-0">Rent!</label>
+                            @endrole
                         </div>
                     </div>
                 </div>
-
+                @role('user')
                 <input type="checkbox" id="my_modal_{{ $data->id }}" class="modal-toggle" />
                 <div class="modal" role="dialog">
                     <div class="modal-box bg-white w-11/12 max-w-5xl">
@@ -55,16 +65,18 @@
                                 @csrf
                                 <input type="hidden" name="id_car" value="{{ $data->id }}">
                                 <input type="text" name="name" value="{{ auth()->user()->name }}"
-                                    placeholder="Type here" class="input input-bordered w-full bg-white" readonly required/>
+                                    placeholder="Type here" class="input input-bordered w-full bg-white" readonly
+                                    required />
                                 <div class="grid grid-cols-2 gap-x-2">
                                     <div class="flex items-center gap-x-1">
                                         <input type="number" name="day" placeholder="Type here"
-                                            class="input input-bordered w-full bg-white" value="0"/>
+                                            class="input input-bordered w-full bg-white" value="0" />
                                         <label for="day">Day</label>
                                     </div>
                                     <div class="flex items-center gap-x-1">
                                         <input type="number" name="hour" placeholder="Type here"
-                                            class="input input-bordered w-full bg-white" max="23" value="1" min="1" required/>
+                                            class="input input-bordered w-full bg-white" max="23" value="1" min="1"
+                                            required />
                                         <label for="day">Hour</label>
                                     </div>
                                 </div>
@@ -77,12 +89,32 @@
                                     <option value="Virtual BCA">Virtual BCA</option>
                                     <option value="Transfer Bank">Transfer Bank</option>
                                 </select>
-                                <button type="submit" class="btn bg-[#fca311] transition-colors hover:bg-[#c7974a] w-full border-0 text-white">Rent!</button>
+                                <button type="submit"
+                                    class="btn bg-[#fca311] transition-colors hover:bg-[#c7974a] w-full border-0 text-white">Rent!</button>
                             </form>
                         </div>
                     </div>
                     <label class="modal-backdrop" for="my_modal_{{ $data->id }}">Close</label>
                 </div>
+                @elserole('admin')
+                <input type="checkbox" id="my_modalDelete{{ $data->id }}" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box bg-white">
+                        <h3 class="font-bold text-lg">Hello!</h3>
+                        <p class="py-4">Are you sure you want to delete {{ $data->name }}</p>
+                        <div class="modal-action">
+                            <form action="{{ route('car.destroy', $data->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-error text-white">
+                                    Delete!
+                                </button>
+                            </form>
+                            <label for="my_modalDelete{{ $data->id }}" class="btn">Close!</label>
+                        </div>
+                    </div>
+                </div>
+                @endrole
                 @endforeach
                 @endif
             </div>
