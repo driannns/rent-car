@@ -235,10 +235,33 @@
                 </td>
                 
                 <td class="flex items-center px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                    <a href="{{ route('car.edit', $list->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <form href="{{ route('car.destroy', $list->id) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <label for="my_modalDelete{{ $list->id }}" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</label>
+                    </form>
                 </td>
             </tr>
+            @role('admin')
+                <input type="checkbox" id="my_modalDelete{{ $list->id }}" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box bg-white">
+                        <h3 class="font-bold text-lg">Hello!</h3>
+                        <p class="py-4">Are you sure you want to delete {{ $list->name }}</p>
+                        <div class="modal-action">
+                            <form action="{{ route('car.destroy', $list->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-error text-white">
+                                    Delete!
+                                </button>
+                            </form>
+                            <label for="my_modalDelete{{ $list->id }}" class="btn">Close!</label>
+                        </div>
+                    </div>
+                </div>
+                @endrole
             @endforeach
             @endif
         </tbody>
