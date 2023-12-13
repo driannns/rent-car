@@ -63,4 +63,9 @@ class UserController extends Controller
             return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
         }
     }
+
+    public function list(){
+        $data = DB::table('users')->orderBy('name', 'asc')->paginate(5);
+        return view('user_list', ['data' =>$data]);
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
@@ -27,6 +28,8 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['data' =>$data]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/add_user', [RegisteredUserController::class, 'createByAdmin'])->name('add_user');
+Route::post('/add_user', [RegisteredUserController::class, 'storeByAdmin'])->name('add_user');
 Route::get('/add_category', [CategoryController::class, 'create'])->name('car.create_category');
 Route::post('/add_category', [CategoryController::class, 'store'])->name('car.create_category');
 Route::post('/add_car', [CarController::class, 'store'])->name('car.create');
@@ -42,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/order', [UserController::class, 'store'])->name('order.store');
 
     Route::get('/category_list', [CategoryController::class, 'index'])->name('category');
+    Route::get('/user_list', [UserController::class, 'list'])->name('user_list');
 
 
     Route::middleware('role:admin')->group(function () {

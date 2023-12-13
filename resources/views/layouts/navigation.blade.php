@@ -43,7 +43,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link>
+                    <x-nav-link :href="route('user_list')" :active="request()->routeIs('user_list')">
                         {{ __('User List') }}
                     </x-nav-link>
                 </div>
@@ -63,10 +63,6 @@
 
             </div>
             
-            
-            
-    
->>>>>>> sal
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

@@ -1,13 +1,8 @@
 <x-app-layout>
     @include('alert')
+    @role ('user')
     <section id="order" class="p-10 text-black">
         <h1 class="text-2xl font-bold text-center">RENT CAR</h1>
-        @role('admin')
-        <div class="grid grid-cols-8 gap-x-5 p-10">
-            <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white border-0">Add Car</a>
-            <a href="{{ route('car.create_category') }}" class="btn bg-[#fca311] text-white border-0">Add Category</a>
-        </div>
-        @endrole
         <div class="flex gap-x-3 p-10">
 
             <div class="w-3/4 grid grid-cols-3 gap-x-5 gap-y-5">
@@ -144,4 +139,91 @@
 
         </div>
     </section>
+    @endrole
+
+@role ('admin')
+<section class=" p-10">
+    <h1 class="text-2xl font-bold text-center text-[#e5e5e5]">LIST MOBIL</h1>
+    <div class=" p-10">
+        <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4">Add New Car</a>
+        
+    </div>
+    
+    
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                
+                <th scope="col" class="px-6 py-3">
+                    No
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Nama
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Jenis
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Bahan Bakar
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Harga
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Available
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (is_countable($data2) && count($data2) > 0)
+            @foreach ($data2 as $list)
+            <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                
+                <th scope="row" class="px-6 py-4">
+                    {{$loop->iteration}}
+                </th>
+                <th scope="row" class="px-6 py-4">
+                    {{$list->name}}
+                </th>
+                <td class="px-6 py-4">
+                    {{$list->category_name}}
+                </td>
+                <td class="px-6 py-4">
+                    {{$list->bbm}}
+                </td>
+                <td class="px-6 py-4">
+                    Rp. {{ number_format($list->harga, 0, ',', '.') }}
+                </td>
+                <td class="px-6 py-4">
+                    {{$list->status}}
+                </td>
+                
+                <td class="flex items-center px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                </td>
+            </tr>
+            @endforeach
+            @endif
+        </tbody>
+    </table>
+</div>
+<div class="flex justify-end mt-4 p-5">
+    {{ $data2->links() }}
+</div>
+
+<div class="flex justify-center mt-4">
+    <p class="text-gray-500">
+        Showing {{ $data2->firstItem() }} to {{ $data2->lastItem() }} of {{ $data2->total() }} results
+    </p>
+</div>
+
+
+</section>
+
+@endrole
 </x-app-layout>

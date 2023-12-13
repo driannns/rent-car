@@ -22,6 +22,11 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
+    
+    public function createByAdmin(): View
+    {
+        return view('add_user');
+    }
 
     /**
      * Handle an incoming registration request.
@@ -53,5 +58,31 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+    public function storeByAdmin(Request $request): RedirectResponse
+    {
+        try{
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string'],
+        ]);
+
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+
+        ])->assignRole($request->role);
+
+        event(new Registered($user));
+
+        return redirect('/user_list')->with('success', 'User Ditambahkan');
+        
+        } catch (\Throwable $th) {
+            return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
+        }
     }
 }

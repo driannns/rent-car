@@ -1,5 +1,5 @@
 <x-app-layout>
-
+@include ('alert')
     <div class="flex text-black" style="height: 91vh;">
         <div class="w-1/2 bg-center bg-cover bg-no-repeat"
             style="height: 91vh; background-image: url('/assets/dashboard.jpeg');">
