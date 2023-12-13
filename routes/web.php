@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/rent', [UserController::class, 'index'])->name('rent.index');
+    
     Route::get('/order', [UserController::class, 'order'])->name('order.index');
     Route::post('/order', [UserController::class, 'store'])->name('order.store');
 
