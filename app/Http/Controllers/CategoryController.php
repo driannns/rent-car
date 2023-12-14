@@ -39,16 +39,14 @@ class CategoryController extends Controller
     {
         try {
             $request->validate([
-                'category' => 'required',
-                
+                'category' => 'required|unique:category,category',
             ]);
     
             Category::create([
                 'category' => $request->category,
-                
             ]);
     
-            return view('category')->with('success', 'Category Ditambahkan');
+            return redirect()->route('category')->with('success', 'Category Ditambahkan');
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
         }

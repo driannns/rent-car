@@ -85,4 +85,26 @@ class RegisteredUserController extends Controller
             return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
         }
     }
+
+    public function editByAdmin(Request $request, string $id){
+        try{
+
+            $user = User::find($id);
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,' . $user->id],
+                'role' => ['required', 'string'],
+            ]);
+            
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+            $user->syncRoles($request->role);
+
+            return redirect('/user_list')->with('success', 'User telah diedit');
+    } catch (\Throwable $th) {
+        return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
+    }
+    }
 }

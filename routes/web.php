@@ -30,6 +30,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/add_user', [RegisteredUserController::class, 'createByAdmin'])->name('add_user');
 Route::post('/add_user', [RegisteredUserController::class, 'storeByAdmin'])->name('add_user');
+Route::patch('/edit_user/{id}', [RegisteredUserController::class, 'editByAdmin'])->name('edit_user');
 
 Route::get('/add_category', [CategoryController::class, 'create'])->name('car.create_category');
 Route::post('/add_category', [CategoryController::class, 'store'])->name('car.create_category');
