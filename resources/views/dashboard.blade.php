@@ -1,5 +1,6 @@
 <x-app-layout>
 @include ('alert')
+@role ('user')
     <div class="flex text-black" style="height: 91vh;">
         <div class="w-1/2 bg-center bg-cover bg-no-repeat"
             style="height: 91vh; background-image: url('/assets/dashboard.jpeg');">
@@ -38,7 +39,7 @@
                     <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                     <div class="card-actions justify-end items-center">
                         <div class="">Rp. {{ number_format($data->harga, 0, ',', '.') }} / 12 jam</div>
-                        <a href="#" class="btn bg-[#fca311] text-white">Rent!</a>
+                        <a href="#" class="btn bg-[#fca311] text-white border-none">Rent!</a>
                     </div>
                 </div>
             </div>
@@ -46,8 +47,22 @@
             @endif
         </div>
         <div class="flex justify-center">
-            <a href="{{ route('rent.index') }}" class="btn bg-[#fca311] text-white">See all car</a>
+            <a href="{{ route('rent.index') }}" class="btn bg-[#fca311] text-white border-none">See all car</a>
         </div>
     </section>
+@endrole
 
+@role ('admin')
+<div class="w-3/4 grid grid-cols-3 gap-x-5 gap-y-5">
+    <div class="card bg-white border-2 shadow-xl">
+        <div style="overflow: hidden; ">
+            {{-- <div class="bg-cover bg-center bg-no-repeat w-full h-full"
+                style="background-image: url('{{ asset('storage/'.$data->picture) }}')">
+                <img class="invisible overflow-hidden" style="object-fit: cover;"
+                    src="{{ asset('car/yaris.png') }}" alt="Gambar Mobil" />
+            </div> --}}
+        </div>              
+    </div>              
+</div>
+@endrole
 </x-app-layout>

@@ -156,7 +156,7 @@
                     <div class="grid grid-cols-2 gap-2 mt-2">
                         @foreach($category as $data)
                         <div class="flex items-center gap-x-2">
-                            <input type="checkbox" name="status" value="{{ $data->category }}"
+                            <input type="checkbox" name="category" value="{{ $data->category }}"
                                 class="checkbox checkbox-warning checkbox-sm" />
                             <label for="">{{ $data->category }}</label>
                         </div>
@@ -177,7 +177,7 @@
 <section class=" p-10">
     <h1 class="text-2xl font-bold text-center text-[#e5e5e5]">LIST MOBIL</h1>
     <div class=" p-10">
-        <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4">Add New Car</a>
+        <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4 border-none">Add New Car</a>
         
     </div>
     
@@ -213,7 +213,7 @@
         <tbody>
             @if (is_countable($data2) && count($data2) > 0)
             @foreach ($data2 as $list)
-            <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-100">
                 
                 <th scope="row" class="px-6 py-4">
                     {{$loop->iteration}}

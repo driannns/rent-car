@@ -69,7 +69,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <img class=" rounded-full object-cover" width="26" height="26" src="{{ asset('storage/'.Auth::user()->picture) }}" onerror="this.onerror=null; this.src='{{ asset('assets/profile.webp') }}';">
+                            <img class="w-7 h-7 rounded-full object-cover" src="{{ asset('storage/'.Auth::user()->picture) }}" onerror="this.onerror=null; this.src='{{ asset('assets/profile.webp') }}';">
                             
                             <span class="mx-2">{{ Auth::user()->name }}</span>
 

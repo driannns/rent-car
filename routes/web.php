@@ -30,10 +30,16 @@ Route::get('/dashboard', function () {
 
 Route::get('/add_user', [RegisteredUserController::class, 'createByAdmin'])->name('add_user');
 Route::post('/add_user', [RegisteredUserController::class, 'storeByAdmin'])->name('add_user');
+
 Route::get('/add_category', [CategoryController::class, 'create'])->name('car.create_category');
 Route::post('/add_category', [CategoryController::class, 'store'])->name('car.create_category');
+Route::get('/{id}/edit_category', [CategoryController::class, 'edit'])->name('edit_category');
+Route::post('/{id}/edit_category', [CategoryController::class, 'update'])->name('edit_category');
+Route::post('/{id}/delete_category', [CategoryController::class, 'destroy'])->name('delete_category');
+
 Route::post('/add_car', [CarController::class, 'store'])->name('car.create');
 Route::post('/search', [CarController::class, 'search'])->name('car.search');
+Route::post('/search_category', [CategoryController::class, 'search'])->name('category.search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

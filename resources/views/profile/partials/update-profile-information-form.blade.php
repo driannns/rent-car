@@ -18,8 +18,14 @@
         @method('patch')
 
         <div>
-            <img class=" rounded-full object-cover" width="100" height="100" src="{{ asset('storage/'.Auth::user()->picture) }}" onerror="this.onerror=null; this.src='{{ asset('assets/profile.webp') }}';">
+            <img class="w-20 h-20 rounded object-cover"  src="{{ asset('storage/'.Auth::user()->picture) }}" onerror="this.onerror=null; this.src='{{ asset('assets/profile.webp') }}';">
 
+        </div>
+
+        <div>
+            <x-input-label for="picture" :value="__('Profile Picture')" />
+            <input id="picture" name="picture" type="file" class="mt-1 block w-full" autofocus autocomplete="picture" />
+            <x-input-error class="mt-2" :messages="$errors->get('picture')" />
         </div>
 
         <div>

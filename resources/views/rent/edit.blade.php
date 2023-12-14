@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include ('alert')
     <section id="order" class="p-10 text-black">
         <form action="{{ route('car.update', $car->id) }}" method="post" class="card bg-white border-2 shadow-xl p-5" enctype="multipart/form-data">
             @csrf    

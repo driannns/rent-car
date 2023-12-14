@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -66,7 +67,7 @@ class UserController extends Controller
     }
 
     public function list(){
-        $data = DB::table('users')->orderBy('name', 'asc')->paginate(5);
+        $data = User::with('roles')->orderBy('name')->paginate(5);
         return view('user_list', ['data' =>$data]);
     }
 }

@@ -17,6 +17,13 @@ class CategoryController extends Controller
         return view('category', ['data' =>$data]);
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $data = Category::where('category', 'like', '%' . $searchTerm . '%' )->paginate(5);
+        return view('category', ['data' =>$data]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -60,7 +67,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Category::find($id);
+        return view('edit_category', ['data' => $data]);
     }
 
     /**
@@ -68,7 +76,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'category' => 'required',
+            
+            
+        ]);
+
+        $category = Category::find($id);
+
+        $category->update([
+            'category' => $request->category,
+            
+        ]);
+
+        return redirect(route('category'))->with('success', 'Category telah diedit');
     }
 
     /**
@@ -76,6 +97,10 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+
+        $category->delete();
+
+        return redirect(route('category'))->with('success', 'Kategori telah dihapus');
     }
 }
