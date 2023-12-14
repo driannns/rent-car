@@ -14,9 +14,11 @@ class Order extends Model
         'name',  
         'id_car',  
         'hours',  
+        'alamat',  
         'payment',  
         'price',  
-        'endOrder',  
+        'startDate',  
+        'endDate',  
         'status',  
     ];
 }

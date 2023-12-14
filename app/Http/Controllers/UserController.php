@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Order;
+use App\Models\Car;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,30 +39,46 @@ class UserController extends Controller
             $credentials = $request->validate([
                 'name' => 'required',
                 'day' => 'required',
+                'alamat' => 'required',
                 'hour' => 'required',
-                'payment' => 'required'
+                'payment' => 'required',
+                'startDate' => 'required',
             ]);
 
             if($credentials){
+
+                $order = Order::where('id_user', auth()->user()->id)->get();
+
+                if(count($order) > 1){
+                    return redirect()->back()->with('success', 'Anda hanya dapat memesan 2 mobil per hari');
+                }
                 $car = DB::table('cars')->find($request->id_car);
                 $dayToHour = $request->day * 24;
                 $hours = $request->hour + $dayToHour; 
-                $endDate = Carbon::now()->addHour($hours);
-                $price = ($hours / 12 * $car->harga);
+                $endDate = Carbon::parse($request->startDate)->addHour($hours);
+                $price = round($hours / 12 * $car->harga, 2);
+                $car = Car::find($request->id_car);
                 Order::create([
                     'id_user' => auth()->user()->id,
                     'name' => $request->name,
                     'id_car' => $request->id_car,
+                    'alamat' => $request->alamat,
                     'hours' => $hours,
                     'payment' => $request->payment,
                     'price' => $price,
-                    'endOrder' => $endDate,
+                    'startDate' => $request->startDate,
+                    'endDate' => $endDate,
                     'status' => 'Processing'
                 ]);
 
-                return redirect()->route('order.index');
+                $car->update([
+                    'status' => 'Unavailable'
+                ]);
+
+                return redirect()->route('order.index')->with('success', 'Order Berhasil');
             }
         } catch (\Throwable $th) {
+            dd($th);
             return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
         }
     }

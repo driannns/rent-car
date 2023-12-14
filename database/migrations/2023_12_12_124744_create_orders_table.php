@@ -18,10 +18,12 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('id_car')->unsigned();
             $table->foreign('id_car')->references('id')->on('cars')->onDelete('cascade');
+            $table->string('alamat');
             $table->string('hours');
             $table->string('payment');
             $table->string('price');
-            $table->string('endOrder');
+            $table->string('startDate');
+            $table->string('endDate');
             $table->enum('status', ['Processing', 'Done']);
             $table->timestamps();
         });

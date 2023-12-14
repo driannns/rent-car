@@ -15,6 +15,6 @@ class Car extends Model
         'bbm',
         'harga',
         'picture',
-        
+        'status'
     ];
 }

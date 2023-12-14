@@ -1,3 +1,8 @@
+<style>
+    ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+</style>
 <x-app-layout>
     @include('alert')
     @role ('user')
@@ -19,7 +24,11 @@
                     <div class="card-body">
                         <h2 class="card-title">
                             {{$data->name}}
-                            <div class="text-sm">Rp. {{ number_format($data->harga, 0, ',', '.') }} / 12 jam</div>
+                            @if($data->status == 'Available')
+                                <div class="badge badge-accent">{{ $data->status }}</div>
+                            @else
+                                <div class="badge badge-error gap-2">{{ $data->status }}</div>
+                            @endif
                         </h2>
                         <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                         <div class="card-actions justify-end items-center">
@@ -46,7 +55,7 @@
                         <div class="flex p-3">
                             <div class="w-1/2">
                                 <div style="overflow: hidden; ">
-                                    <div class="bg-cover bg-center bg-no-repeat w-full h-full"
+                                    <div class="bg-cover bg-center bg-no-repeat "
                                         style="background-image: url('{{ asset('storage/'.$data->picture) }}')">
                                         <img class="invisible overflow-hidden" style="object-fit: cover;"
                                             src="{{ asset('car/yaris.png') }}" alt="Gambar Mobil" />
@@ -67,6 +76,8 @@
                                 <input type="text" name="name" value="{{ auth()->user()->name }}"
                                     placeholder="Type here" class="input input-bordered w-full bg-white" readonly
                                     required />
+                                <textarea class="textarea textarea-bordered bg-white" placeholder="alamat" name="alamat"></textarea>
+                                <input type="date" placeholder="Type here" class="input input-bordered w-full bg-white" name="startDate"/>
                                 <div class="grid grid-cols-2 gap-x-2">
                                     <div class="flex items-center gap-x-1">
                                         <input type="number" name="day" placeholder="Type here"
