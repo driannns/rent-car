@@ -3,7 +3,14 @@
     <section id="order" class="p-10 text-black">
         <h1 class="font-bold text-xl text-center">My Order History</h1>
     </section>
+    @if (is_countable($orders) && count($orders) == 0)
+    <div class="flex justify-center">
+        <img class="gambar" src="{{ asset('assets/kosong.png') }}" alt="">
+    </div>
+    
+    @else
     <div class="p-10">
+        
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -65,13 +72,21 @@
                 </tbody>
             </table>
         </div>
+        
     </div>
+    @endif
     @endrole
 
     @role ('admin')
+    
     <section class=" p-10">
         <h1 class="text-2xl font-bold text-center p-10">LIST ORDER</h1>
-
+        @if (is_countable($data) && count($data) == 0)
+        <div class="flex justify-center">
+            <img class="gambar" src="{{ asset('assets/kosong.png') }}" alt="">
+        </div>
+        
+        @else
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -188,7 +203,8 @@
             </p>
         </div>
 
-
+        @endif
     </section>
+    
     @endrole
 </x-app-layout>

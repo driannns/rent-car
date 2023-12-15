@@ -19,4 +19,13 @@ class Car extends Model
         'picture',
         'status'
     ];
+
+    public function categories() {
+        return $this->hasMany(Category::class);
+        }
+
+        public function cars()
+        {
+            return $this->belongsToMany(Category::class);
+        }    
 }

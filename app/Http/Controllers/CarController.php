@@ -22,8 +22,15 @@ class CarController extends Controller
     {
         $searchTerm = $request->input('search');
         $data = Car::where('name', 'like', '%' . $searchTerm . '%')->get();
+
+        $data2 = DB::table('cars')
+            ->join('categories', 'cars.id_category', '=', 'categories.id')
+            ->orderBy('cars.name', 'asc')
+            ->select('cars.*', 'categories.category as category_name')
+            ->paginate(5);
+
         $category = DB::table('categories')->orderBy('category', 'asc')->get();
-        return view('rent.index', ['data' =>$data, 'category' => $category]);
+        return view('rent.index', ['data' =>$data, 'data2' =>$data2, 'category' => $category]);
     }
 
     /**
@@ -55,6 +62,7 @@ class CarController extends Controller
             $filename = uniqid() . "_" . $file->getClientOriginalName();
             $file->storeAs('public/', $filename);
             $id = Str::random('5');
+            
             Car::create([
                 'id' => $id,
                 'name' => $request->name,

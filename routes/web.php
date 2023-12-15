@@ -25,7 +25,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $data = DB::table('cars')->orderBy('id', 'desc')->take(4)->get();
-    return view('dashboard', ['data' =>$data]);
+    $user = DB::table('users')->get();
+    $order = DB::table('orders')->where('status', 'Processing')->get();
+    $order2 = DB::table('orders')->where('status', 'Done')->get();
+
+    return view('dashboard', ['data' =>$data, 'user' => $user, 'order' => $order, 'order2' => $order2]);
+    
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/add_user', [RegisteredUserController::class, 'createByAdmin'])->name('add_user');

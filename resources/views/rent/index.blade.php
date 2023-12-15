@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @if($data->status == 'available')
+                        @if($data->status == 'Available')
                             <div class="badge badge-success text-white">Available</div>
                         @else
                             <div class="badge badge-error gap-2 text-white">{{ $data->status }}</div>
@@ -42,7 +42,7 @@
                             <label for="my_modalDelete{{ $data->id }}"
                                 class="btn btn-error text-white border-0">Delete!</label>
                             @elserole('user')
-                            @if ($data->status == 'available')
+                            @if ($data->status == 'Available')
                             <label for="my_modal_{{ $data->id }}"
                                 class="btn bg-[#fca311] text-white border-0 hover:bg-[#c7974a]">Rent!</label>
                             @else
@@ -193,13 +193,18 @@
 @role ('admin')
 <section class=" p-10">
     <h1 class="text-2xl font-bold text-center text-[#e5e5e5]">LIST MOBIL</h1>
-    
-    <div class="py-5 px-5 w-1/2 grid grid-columns-2">
-        <div class="py-5">
-            <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4 transition-colors hover:bg-[#c7974a] border-none">Add New Category</a>
+    @if (is_countable($data) && count($data) == 0)
+        <div class="flex justify-center">
+            <img class="gambar" src="{{ asset('assets/kosong.png') }}" alt="">
         </div>
         
-        <form action="/search_category" method="POST">
+    @else
+    <div class="py-5 px-5 w-1/2 grid grid-columns-2">
+        <div class="py-5">
+            <a href="{{ route('car.create') }}" class="btn bg-[#fca311] text-white mt-4 transition-colors hover:bg-[#c7974a] border-none">Add New Car</a>
+        </div>
+        
+        <form action="/search" method="POST">
             @csrf
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
             <div class="relative">
@@ -220,102 +225,102 @@
     </div>
     
     
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                
-                <th scope="col" class="px-6 py-3">
-                    Id Car
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Nama
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Jenis
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Bahan Bakar
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Harga
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Available
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (is_countable($data2) && count($data2) > 0)
-            @foreach ($data2 as $list)
-            <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-100">
-                
-                <th scope="row" class="px-6 py-4 uppercase">
-                    {{$list->id}}
-                </th>
-                <th scope="row" class="px-6 py-4">
-                    {{$list->name}}
-                </th>
-                <td class="px-6 py-4">
-                    {{$list->category_name}}
-                </td>
-                <td class="px-6 py-4">
-                    {{$list->bbm}}
-                </td>
-                <td class="px-6 py-4">
-                    Rp. {{ number_format($list->harga, 0, ',', '.') }}
-                </td>
-                <td class="px-6 py-4">
-                    {{$list->status}}
-                </td>
-                
-                <td class="flex items-center px-6 py-4">
-                    <a href="{{ route('car.edit', $list->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <form href="{{ route('car.destroy', $list->id) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <label for="my_modalDelete{{ $list->id }}" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</label>
-                    </form>
-                </td>
-            </tr>
-            @role('admin')
-                <input type="checkbox" id="my_modalDelete{{ $list->id }}" class="modal-toggle" />
-                <div class="modal" role="dialog">
-                    <div class="modal-box bg-white">
-                        <h3 class="font-bold text-lg">Hello!</h3>
-                        <p class="py-4">Are you sure you want to delete {{ $list->name }}</p>
-                        <div class="modal-action">
-                            <form action="{{ route('car.destroy', $list->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-error text-white">
-                                    Delete!
-                                </button>
-                            </form>
-                            <label for="my_modalDelete{{ $list->id }}" class="btn">Close!</label>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    
+                    <th scope="col" class="px-6 py-3">
+                        Id Car
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nama
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Jenis
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Bahan Bakar
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Harga
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Available
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (is_countable($data2) && count($data2) > 0)
+                @foreach ($data2 as $list)
+                <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-100">
+                    
+                    <th scope="row" class="px-6 py-4 uppercase">
+                        {{$list->id}}
+                    </th>
+                    <th scope="row" class="px-6 py-4">
+                        {{$list->name}}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{$list->category_name}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{$list->bbm}}
+                    </td>
+                    <td class="px-6 py-4">
+                        Rp. {{ number_format($list->harga, 0, ',', '.') }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{$list->status}}
+                    </td>
+                    
+                    <td class="flex items-center px-6 py-4">
+                        <a href="{{ route('car.edit', $list->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <form href="{{ route('car.destroy', $list->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <label for="my_modalDelete{{ $list->id }}" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</label>
+                        </form>
+                    </td>
+                </tr>
+                @role('admin')
+                    <input type="checkbox" id="my_modalDelete{{ $list->id }}" class="modal-toggle" />
+                    <div class="modal" role="dialog">
+                        <div class="modal-box bg-white">
+                            <h3 class="font-bold text-lg">Hello!</h3>
+                            <p class="py-4">Are you sure you want to delete {{ $list->name }}</p>
+                            <div class="modal-action">
+                                <form action="{{ route('car.destroy', $list->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-error text-white">
+                                        Delete!
+                                    </button>
+                                </form>
+                                <label for="my_modalDelete{{ $list->id }}" class="btn">Close!</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endrole
-            @endforeach
-            @endif
-        </tbody>
-    </table>
-</div>
-<div class="flex justify-end mt-4 p-5">
-    {{ $data2->links() }}
-</div>
+                    @endrole
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+    <div class="flex justify-end mt-4 p-5">
+        {{ $data2->links() }}
+    </div>
 
-<div class="flex justify-center mt-4">
-    <p class="text-gray-500">
-        Showing {{ $data2->firstItem() }} to {{ $data2->lastItem() }} of {{ $data2->total() }} results
-    </p>
-</div>
+    <div class="flex justify-center mt-4">
+        <p class="text-gray-500">
+            Showing {{ $data2->firstItem() }} to {{ $data2->lastItem() }} of {{ $data2->total() }} results
+        </p>
+    </div>
 
-
+    @endif
 </section>
 
 @endrole
