@@ -29,9 +29,39 @@ class UserController extends Controller
     }
 
     public function order(){
-        $orders = DB::table('orders')->where('id_user', auth()->user()->id)->get();
-        $data = DB::table('orders')->orderBy('id', 'desc')->paginate(5);
+        $orders = DB::table('orders')
+        ->where('id_user', auth()->user()->id)
+        ->where('status', 'Processing')
+        ->get();
+
+        $data = DB::table('orders')
+        ->where('status', 'Processing')
+        ->orderBy('id', 'desc')
+        ->paginate(5);
+        
+        foreach ($orders as $order) {
+            $car = DB::table('cars')->where('id', $order->id_car)->first();
+            $order->car_name = $car->name;
+        }
         return view ('order.index', ['orders' => $orders, 'data' => $data]);
+    }
+
+    public function history(){
+        $orders = DB::table('orders')
+        ->where('id_user', auth()->user()->id)
+        ->where('status', 'Done')
+        ->get();
+
+        $data = DB::table('orders')
+        ->where('status', 'Done')
+        ->orderBy('id', 'desc')
+        ->paginate(5);
+
+        foreach ($orders as $order) {
+            $car = DB::table('cars')->where('id', $order->id_car)->first();
+            $order->car_name = $car->name;
+        }
+        return view ('order.history', ['orders' => $orders, 'data' => $data]);
     }
 
     public function store(Request $request){
@@ -106,15 +136,35 @@ class UserController extends Controller
         return redirect(route('order.index'))->with('success', 'Order telah dihapus');
     }
 
+    public function destroy2(string $id)
+    {
+        $order = Order::find($id);
+
+        $order->delete();
+
+        return redirect(route('history.index'))->with('success', 'History telah dihapus');
+    }
+
     public function update(string $id)
     {
         $order = Order::find($id);
         $car = Car::find($order->id_car);
 
-        $order->update([
-            'status' => 'Done'
-            
-        ]);
+        $endDate = Carbon::parse($order->endDate);
+        
+        if ($endDate->isPast()) {
+            $order->update([
+                'status' => 'Done',
+                'late' => 'Yes'
+            ]);
+        }else {
+            $order->update([
+                'status' => 'Done',
+                'late' => 'No'
+            ]);
+        }
+
+        
 
         $car->update([
             'status' => 'available'

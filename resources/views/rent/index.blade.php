@@ -22,13 +22,14 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if($data->status == 'available')
+                            <div class="badge badge-success text-white">Available</div>
+                        @else
+                            <div class="badge badge-error gap-2 text-white">{{ $data->status }}</div>
+                        @endif
                         <h2 class="card-title">
                             {{$data->name}}
-                            @if($data->status == 'available')
-                                <span class="badge badge-success">Available</span>
-                            @else
-                                <div class="badge badge-error gap-2">{{ $data->status }}</div>
-                            @endif
+                            
                         </h2>
                         <p>{{substr($data->deskripsi, 0, 70) . '   ...'}}</p>
                         <div class="card-actions justify-end items-center">
@@ -43,7 +44,7 @@
                             @elserole('user')
                             @if ($data->status == 'available')
                             <label for="my_modal_{{ $data->id }}"
-                                class="btn bg-[#fca311] text-white border-0">Rent!</label>
+                                class="btn bg-[#fca311] text-white border-0 hover:bg-[#c7974a]">Rent!</label>
                             @else
                             <label for="my_modal_{{ $data->id }}"
                                 class="btn bg-[#fca311] text-white border-0" @disabled(true)>Rent!</label>
@@ -61,7 +62,7 @@
                             <div class="w-1/2">
                                 <div style="overflow: hidden; ">
                                     <div class="bg-cover bg-center bg-no-repeat "
-                                        style="background-image: url('{{ asset('storage/'.$data->picture) }}')">
+                                        style="background-image: url('{{ asset('storage/'.$data->picture) }}')"  onerror="this.onerror=null; this.src='{{ asset('assets/Daco.png') }}';">
                                         <img class="invisible overflow-hidden" style="object-fit: cover;"
                                             src="{{ asset('car/yaris.png') }}" alt="Gambar Mobil" />
                                     </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     @role ('user')
     <section id="order" class="p-10 text-black">
-        <h1 class="font-bold text-xl text-center">My Order</h1>
+        <h1 class="font-bold text-xl text-center">My Order History</h1>
     </section>
     <div class="p-10">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
@@ -17,6 +17,7 @@
                         <th scope="col" class="px-6 py-3">Start Order</th>
                         <th scope="col" class="px-6 py-3">End Order</th>
                         <th scope="col" class="px-6 py-3">Status</th>
+                        <th scope="col" class="px-6 py-3">Pengembalian</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,18 @@
                             <p class="text-red-600 font-semibold">
                                 {{ $order->status }}
                             </p>
+                            @endif   
+                        </td>
+                        <td class="px-6 py-4">
+                            @if($order->late == "Yes")
+                            <p class="text-orange-400 font-semibold">
+                                Terlambat
+                            </p>
+                            @else
+                            <p class="text-green-600 font-semibold">
+                                On Time
+                            </p>
+                            
                             @endif   
                         </td>
                     </tr>
@@ -87,6 +100,9 @@
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            Pengembalian
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Action
                         </th>
                     </tr>
@@ -117,19 +133,24 @@
                         <td class="px-6 py-4">
                             {{$list->status}}
                         </td>
-
+                        <td class="px-6 py-4">
+                            @if($list->late == "Yes")
+                            <p class="text-orange-400 font-semibold">
+                                Terlambat
+                            </p>
+                            @else
+                            <p class="text-green-600 font-semibold">
+                                On Time
+                            </p>
+                            
+                            @endif   
+                        </td>
 
                         <td class="flex items-center px-6 py-4">
-                            @if ($list->status == 'Processing')
-                            <a href="{{ route('order.update', $list->id) }}"
-                                class="font-medium text-green-600 dark:text-green-500 hover:underline">Done</a>
-                            @else
-                            <a
-                                class="font-medium text-gray-600 dark:text-gray-500">Returned</a>
-                            @endif
-                            <form href="{{ route('order.destroy', $list->id) }}" method="post">
+                            
+                            <form href="{{ route('history.destroy', $list->id) }}" method="post">
                                 @csrf
-                                @method('delete')
+                                
                                 <label for="my_modalDelete{{ $list->id }}"
                                     class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</label>
                             </form>
@@ -141,9 +162,9 @@
                             <h3 class="font-bold text-lg">Hello!</h3>
                             <p class="py-4">Are you sure you want to delete {{ $list->name }}</p>
                             <div class="modal-action">
-                                <form action="{{ route('order.destroy', $list->id) }}" method="post">
+                                <form action="{{ route('history.destroy', $list->id) }}" method="post">
                                     @csrf
-                                    @method('delete')
+                                    
                                     <button class="btn btn-error text-white">
                                         Delete!
                                     </button>
