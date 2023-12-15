@@ -3,7 +3,7 @@
     <section id="order" class="p-10 text-black">
         <form action="{{ route('car.update', $car->id) }}" method="post" class="card bg-white border-2 shadow-xl p-5" enctype="multipart/form-data">
             @csrf    
-            @method('put')
+            @method('patch')
             <h1 class="font-bold text-xl text-center">Edit {{ $car->name }}</h1>
             <div class="flex gap-x-2">
                 <div class="w-1/3 bg-cover bg-center bg-no-repeat h-full"

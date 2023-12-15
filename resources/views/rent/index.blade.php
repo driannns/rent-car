@@ -231,7 +231,7 @@
                 <tr>
                     
                     <th scope="col" class="px-6 py-3">
-                        Id Car
+                        Code Car
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Nama
@@ -259,7 +259,7 @@
                 <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-100">
                     
                     <th scope="row" class="px-6 py-4 uppercase">
-                        {{$list->id}}
+                        {{$list->code}}
                     </th>
                     <th scope="row" class="px-6 py-4">
                         {{$list->name}}

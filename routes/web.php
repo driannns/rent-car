@@ -27,7 +27,7 @@ Route::get('/dashboard', function () {
     $data = DB::table('cars')->orderBy('id', 'desc')->take(4)->get();
     $user = DB::table('users')->get();
     $order = DB::table('orders')->where('status', 'Processing')->get();
-    $order2 = DB::table('orders')->where('status', 'Done')->get();
+    $order2 = DB::table('orders')->get();
 
     return view('dashboard', ['data' =>$data, 'user' => $user, 'order' => $order, 'order2' => $order2]);
     
@@ -45,6 +45,7 @@ Route::post('/{id}/edit_category', [CategoryController::class, 'update'])->name(
 Route::post('/{id}/delete_category', [CategoryController::class, 'destroy'])->name('delete_category');
 
 Route::post('/add_car', [CarController::class, 'store'])->name('car.create');
+Route::patch('/update_car', [CarController::class, 'update'])->name('car.update');
 Route::post('/search', [CarController::class, 'search'])->name('car.search');
 Route::post('/search_category', [CategoryController::class, 'search'])->name('category.search');
 

@@ -10,7 +10,7 @@ class Car extends Model
     protected $primaryKey = 'id';
     use HasFactory;
     protected $fillable = [
-        'id',
+        'code',
         'name',
         'deskripsi',
         'id_category',

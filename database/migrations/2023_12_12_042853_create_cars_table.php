@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cars', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
+            $table->string('code');
             $table->string('name');
             $table->string('deskripsi');
             $table->bigInteger('id_category')->unsigned()->index()->nullable();

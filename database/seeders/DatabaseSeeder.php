@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Car::create(
             [
-            'id' => $id,
+            'code' => $id,
             'name' => 'Toyota Alphard',
             'deskripsi' =>  'New Alphard memperoleh begitu banyak sentuhan inovasi, sehingga tidak hanya memberikan kenyamanan berkendara terbaik, MPV ini juga memperkuat positioning-nya di segmen luxury vehicle yang sangat eksklusif.',
             'id_category' => 1,

@@ -64,7 +64,7 @@ class CarController extends Controller
             $id = Str::random('5');
             
             Car::create([
-                'id' => $id,
+                'code' => $id,
                 'name' => $request->name,
                 'deskripsi' => $request->deskripsi,
                 'id_category' => $request->id_category,
