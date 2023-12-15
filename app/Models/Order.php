@@ -20,5 +20,6 @@ class Order extends Model
         'startDate',  
         'endDate',  
         'status',  
+        'late',  
     ];
 }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('startDate');
             $table->string('endDate');
             $table->enum('status', ['Processing', 'Done']);
+            $table->string('late')->nullable();
             $table->timestamps();
         });
     }

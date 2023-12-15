@@ -51,8 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/rent', [UserController::class, 'index'])->name('rent.index');
     
     Route::get('/order', [UserController::class, 'order'])->name('order.index');
+    Route::get('/history', [UserController::class, 'history'])->name('history.index');
     Route::post('/order', [UserController::class, 'store'])->name('order.store');
-    Route::post('/delete_order', [UserController::class, 'destroy'])->name('order.destroy');
+    Route::post('/{id}/delete_order', [UserController::class, 'destroy'])->name('order.destroy');
+    Route::post('/{id}/delete_history', [UserController::class, 'destroy2'])->name('history.destroy');
     Route::get('/{id}/update_order', [UserController::class, 'update'])->name('order.update');
 
     Route::get('/category_list', [CategoryController::class, 'index'])->name('category');
