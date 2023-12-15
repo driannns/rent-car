@@ -55,7 +55,7 @@
 
     @role ('admin')
     <section class=" p-10">
-        <h1 class="text-2xl font-bold text-center ">LIST ORDER</h1>
+        <h1 class="text-2xl font-bold text-center p-10">LIST ORDER</h1>
 
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
@@ -110,7 +110,7 @@
                             {{$list->payment}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$list->endOrder}}
+                            {{$list->endDate}}
                         </td>
                         <td class="px-6 py-4">
                             {{$list->status}}
@@ -118,9 +118,14 @@
 
 
                         <td class="flex items-center px-6 py-4">
-                            <a href="{{ route('car.edit', $list->id) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <form href="{{ route('car.destroy', $list->id) }}" method="post">
+                            @if ($list->status == 'Processing')
+                            <a href="{{ route('order.update', $list->id) }}"
+                                class="font-medium text-green-600 dark:text-green-500 hover:underline">Done</a>
+                            @else
+                            <a
+                                class="font-medium text-gray-600 dark:text-gray-500">Returned</a>
+                            @endif
+                            <form href="{{ route('order.destroy', $list->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <label for="my_modalDelete{{ $list->id }}"
@@ -134,7 +139,7 @@
                             <h3 class="font-bold text-lg">Hello!</h3>
                             <p class="py-4">Are you sure you want to delete {{ $list->name }}</p>
                             <div class="modal-action">
-                                <form action="{{ route('car.destroy', $list->id) }}" method="post">
+                                <form action="{{ route('order.destroy', $list->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-error text-white">

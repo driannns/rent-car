@@ -50,7 +50,16 @@ class UserController extends Controller
                 $order = Order::where('id_user', auth()->user()->id)->get();
 
                 if(count($order) > 1){
-                    return redirect()->back()->with('success', 'Anda hanya dapat memesan 2 mobil per hari');
+                    $status = 0;
+                    foreach ($order as $order) {
+                        if ($order->status == 'Processing') {
+                            $status = $status + 1;
+                        }
+                    }
+                    if ($status > 1) {
+                        return redirect()->back()->with('msg', 'Anda hanya dapat memesan 2 mobil per hari');
+                    }
+                    
                 }
                 $car = DB::table('cars')->find($request->id_car);
                 $dayToHour = $request->day * 24;
@@ -86,5 +95,31 @@ class UserController extends Controller
     public function list(){
         $data = User::with('roles')->orderBy('name')->paginate(5);
         return view('user_list', ['data' =>$data]);
+    }
+
+    public function destroy(string $id)
+    {
+        $order = Order::find($id);
+
+        $order->delete();
+
+        return redirect(route('order.index'))->with('success', 'Order telah dihapus');
+    }
+
+    public function update(string $id)
+    {
+        $order = Order::find($id);
+        $car = Car::find($order->id_car);
+
+        $order->update([
+            'status' => 'Done'
+            
+        ]);
+
+        $car->update([
+            'status' => 'available'
+        ]);
+
+        return redirect(route('order.index'))->with('success', 'Mobil telah dikembalikan, order selesai');
     }
 }

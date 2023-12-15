@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/order', [UserController::class, 'order'])->name('order.index');
     Route::post('/order', [UserController::class, 'store'])->name('order.store');
+    Route::post('/delete_order', [UserController::class, 'destroy'])->name('order.destroy');
+    Route::get('/{id}/update_order', [UserController::class, 'update'])->name('order.update');
 
     Route::get('/category_list', [CategoryController::class, 'index'])->name('category');
     Route::get('/user_list', [UserController::class, 'list'])->name('user_list');
