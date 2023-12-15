@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -53,8 +54,9 @@ class CarController extends Controller
             $file = $request->file('picture');
             $filename = uniqid() . "_" . $file->getClientOriginalName();
             $file->storeAs('public/', $filename);
-    
+            $id = Str::random('5');
             Car::create([
+                'id' => $id,
                 'name' => $request->name,
                 'deskripsi' => $request->deskripsi,
                 'id_category' => $request->id_category,

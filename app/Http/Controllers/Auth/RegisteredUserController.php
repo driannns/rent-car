@@ -107,4 +107,12 @@ class RegisteredUserController extends Controller
         return back()->withInput()->withErrors(['msg' => $th->getMessage()]);
     }
     }
+
+    public function deleteByAdmin(Request $request, string $id){
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'user berhasil di hapus');
+    }
 }

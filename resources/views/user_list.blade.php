@@ -122,11 +122,17 @@
                     <!-- Delete -->
                     <input type="checkbox" id="delete_modal_{{ $list->id }}" class="modal-toggle" />
                     <div class="modal" role="dialog">
-                        <div class="modal-box bg-white">
-                            <h3 class="font-bold text-lg">Delete User Account!</h3>
-                            <p class="py-4">This modal works with a hidden checkbox!</p>
-                            <div class="modal-action">
-                                <label for="edit_modal_{{ $list->id }}" class="btn">Close!</label>
+                        <div class="modal-box bg-white text-black">
+                            <h3 class="font-bold text-lg text-center">Are you sure you want to delete {{ $list->name }} Account!</h3>
+                            <div class="modal-action flex items-center">
+                                <form action="{{ route('delete_user', $list->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-error" type="submit">
+                                        Delete
+                                    </button>
+                                </form>
+                                <label for="delete_modal_{{ $list->id }}" class="btn">Close!</label>
                             </div>
                         </div>
                     </div>

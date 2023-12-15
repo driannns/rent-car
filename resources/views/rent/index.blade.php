@@ -225,7 +225,7 @@
             <tr>
                 
                 <th scope="col" class="px-6 py-3">
-                    No
+                    Id Car
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Nama
@@ -252,8 +252,8 @@
             @foreach ($data2 as $list)
             <tr class="bg-white border-b  dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-100">
                 
-                <th scope="row" class="px-6 py-4">
-                    {{$loop->iteration}}
+                <th scope="row" class="px-6 py-4 uppercase">
+                    {{$list->id}}
                 </th>
                 <th scope="row" class="px-6 py-4">
                     {{$list->name}}
